@@ -1,0 +1,2 @@
+add_library(queue_stack_lib INTERFACE)
+target_include_directories(queue_stack_lib INTERFACE .)
