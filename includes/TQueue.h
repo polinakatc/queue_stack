@@ -1,5 +1,7 @@
 #include<iostream>
 #include<stdexcept>
+#include <fstream>
+#include <string>
 
 template<typename T>
 class TQueue{
@@ -24,6 +26,10 @@ public:
     TQueue& operator=(TQueue&& other);
     bool operator==(const TQueue& other) const;
     bool operator!=(const TQueue& other) const;
+
+    T FindMin() const;
+    void SaveToFile(const std::string& filename) const;
+    void LoadFromFile(const std::string& filename);
 
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const TQueue<U>& queue);
@@ -249,4 +255,67 @@ inline void TQueue<T>::resize(size_t newCapacity)
     capacity = newCapacity;
     front = 0;
     tail = currentSize;
+}
+
+template<class T>
+inline T TQueue<T>::FindMin() const
+{
+    if (IsEmpty())
+        throw std::underflow_error("jopa 15");
+
+    T minElem = data[front];
+    size_t current = (front + 1) % capacity;
+    
+    for (size_t i = 1; i < Size(); ++i)
+    {
+        if (data[current] < minElem)
+            minElem = data[current];
+        current = (current + 1) % capacity;
+    }
+    
+    return minElem;
+}
+template<class T>
+inline void TQueue<T>::SaveToFile(const std::string& filename) const
+{
+    std::ofstream file(filename);
+    if (!file.is_open())
+        throw std::runtime_error("Cannot open file");
+
+    size_t currentSize = Size();
+    file << currentSize << std::endl;
+
+    size_t current = front;
+    for (size_t i = 0; i < currentSize; ++i)
+    {
+        file << data[current] << std::endl;
+        current = (current + 1) % capacity;
+    }
+
+    file.close();
+}
+
+template<class T>
+inline void TQueue<T>::LoadFromFile(const std::string& filename)
+{
+    std::ifstream file(filename);
+    if (!file.is_open())
+        throw std::runtime_error("Cannot open file");
+
+    
+    size_t elementCount;
+    file >> elementCount;
+
+    
+    TQueue<T> temp(elementCount + 1); 
+
+    T element;
+    for (size_t i = 0; i < elementCount; ++i)
+    {
+        file >> element;
+        temp.Put(element);
+    }
+
+    *this = std::move(temp);
+    file.close();
 }

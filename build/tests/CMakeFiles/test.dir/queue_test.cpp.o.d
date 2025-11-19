@@ -222,4 +222,8 @@ tests/CMakeFiles/test.dir/queue_test.cpp.o: \
  /usr/include/c++/13/utility /usr/include/c++/13/bits/stl_relops.h \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
  /usr/include/assert.h \
- /home/kewin/Documents/kuni/bebebubu/queue_stack/tests/../includes/TStack.h
+ /home/kewin/Documents/kuni/bebebubu/queue_stack/tests/../includes/TStack.h \
+ /usr/include/c++/13/fstream \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
+ /usr/include/c++/13/bits/fstream.tcc

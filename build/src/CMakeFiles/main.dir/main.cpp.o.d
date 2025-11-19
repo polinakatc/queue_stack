@@ -150,4 +150,9 @@ src/CMakeFiles/main.dir/main.cpp.o: \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
  /usr/include/c++/13/bits/istream.tcc \
- /home/kewin/Documents/kuni/bebebubu/queue_stack/includes/./TQueue.h
+ /home/kewin/Documents/kuni/bebebubu/queue_stack/includes/./TQueue.h \
+ /usr/include/c++/13/fstream /usr/include/c++/13/bits/codecvt.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
+ /usr/include/c++/13/bits/fstream.tcc \
+ /home/kewin/Documents/kuni/bebebubu/queue_stack/includes/./TMultiStack.h

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
+#include <string>
 
 template<typename T>
 class TStack
@@ -15,8 +17,8 @@ public:
     size_t GetTop() const;
     size_t Size() const;
 
-    void Push(T elem);  // Аналог Push
-    T Pop();           // Аналог Pop  
+    void Push(T elem);  
+    T Pop();           
     bool IsEmpty() const;
     bool IsFull() const;
 
@@ -24,6 +26,10 @@ public:
     TStack& operator=(TStack&& other);
     bool operator==(const TStack& other) const;
     bool operator!=(const TStack& other) const;
+
+    T FindMin() const;
+    void SaveToFile(const std::string& filename) const;
+    void LoadFromFile(const std::string& filename);
 
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const TStack<U>& stack);
@@ -231,4 +237,65 @@ void TStack<T>::resize(size_t newCapacity)
     delete[] data;
     data = newData;
     capacity = newCapacity;
+}
+
+template<class T>
+inline void TStack<T>::SaveToFile(const std::string& filename) const
+{
+    std::ofstream file(filename);
+    if (!file.is_open())
+        throw std::runtime_error("Cannot open file");
+
+    // Сохраняем только размер и элементы
+    file << top << std::endl;
+
+    for (size_t i = 0; i < top; ++i)
+    {
+        file << data[i] << std::endl;
+    }
+
+    file.close();
+}
+
+template<class T>
+inline void TStack<T>::LoadFromFile(const std::string& filename)
+{
+    std::ifstream file(filename);
+    if (!file.is_open())
+        throw std::runtime_error("Cannot open file");
+
+    // Читаем количество элементов
+    size_t elementCount;
+    file >> elementCount;
+
+    // Создаем новый стек
+    TStack<T> temp(elementCount);
+
+    // Читаем и добавляем элементы
+    T element;
+    for (size_t i = 0; i < elementCount; ++i)
+    {
+        file >> element;
+        temp.Push(element);
+    }
+
+    // Заменяем текущий стек
+    *this = std::move(temp);
+    file.close();
+}
+
+template<class T>
+inline T TStack<T>::FindMin() const
+{
+    if (IsEmpty())
+        throw std::underflow_error("Stack is empty");
+
+    T minElem = data[0];
+    for (size_t i = 1; i < top; ++i)
+    {
+        if (data[i] < minElem)
+            minElem = data[i];
+    }
+    
+    return minElem;
 }
